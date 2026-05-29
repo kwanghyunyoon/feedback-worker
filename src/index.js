@@ -29,21 +29,33 @@ export default {
     const title = source === 'clarity' ? 'Clarity in Calm Feedback' : 'Dreami Feedback';
     const color = source === 'clarity' ? 0x7DB59A : 0x5B57B8;
 
-    const res = await fetch(env.DISCORD_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        embeds: [{
-          title,
-          color,
-          fields: [
-            { name: 'Type',        value: String(issueType || 'Bug'), inline: true },
-            { name: 'Description', value: description.trim().slice(0, 1024) },
-          ],
-        }],
-      }),
-    });
+    let res;
+    try {
+      res = await fetch(env.DISCORD_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          embeds: [{
+            title,
+            color,
+            fields: [
+              { name: 'Type',        value: String(issueType || 'Bug'), inline: true },
+              { name: 'Description', value: description.trim().slice(0, 1024) },
+            ],
+          }],
+        }),
+      });
+    } catch (err) {
+      console.error('Discord fetch failed:', err.message);
+      return new Response('Discord fetch failed', { status: 502, headers: CORS });
+    }
 
-    return new Response(null, { status: res.ok ? 204 : 502, headers: CORS });
+    if (!res.ok) {
+      const text = await res.text();
+      console.error('Discord error', res.status, text);
+      return new Response('Discord error', { status: 502, headers: CORS });
+    }
+
+    return new Response(null, { status: 204, headers: CORS });
   },
 };
