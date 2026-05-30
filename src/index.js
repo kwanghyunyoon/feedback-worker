@@ -26,8 +26,14 @@ export default {
       return new Response('Missing description', { status: 400, headers: CORS });
     }
 
-    const title = source === 'clarity' ? 'Clarity in Calm Feedback' : 'Dreami Feedback';
-    const color = source === 'clarity' ? 0x7DB59A : 0x5B57B8;
+    const title =
+      source === 'clarity'           ? 'Clarity in Calm Feedback'   :
+      source === 'classroom-toolkit' ? 'Classroom Toolkit Feedback'  :
+                                       'Dreami Feedback';
+    const color =
+      source === 'clarity'           ? 0x7DB59A :
+      source === 'classroom-toolkit' ? 0xF59E0B :
+                                       0x5B57B8;
 
     let res;
     try {
