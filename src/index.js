@@ -10,6 +10,7 @@ const CORS = {
 const GITHUB_ISSUE_REPOS = {
   clarity: 'kwanghyunyoon/clarity-in-calm',
   dreami: 'kwanghyunyoon/dreami',
+  clarityai: 'kwanghyunyoon/clarityai',
 };
 
 async function createGithubIssue(repo, token, issueType, description) {
@@ -65,10 +66,12 @@ export default {
     const title =
       source === 'clarity'           ? 'Clarity in Calm Feedback'   :
       source === 'classroom-toolkit' ? 'Classroom Toolkit Feedback'  :
+      source === 'clarityai'         ? 'ClarityAI Feedback'          :
                                        'Dreami Feedback';
     const color =
       source === 'clarity'           ? 0x7DB59A :
       source === 'classroom-toolkit' ? 0xF59E0B :
+      source === 'clarityai'         ? 0x208AEF :
                                        0x5B57B8;
 
     let githubIssueUrl = null;
