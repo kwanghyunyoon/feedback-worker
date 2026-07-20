@@ -9,6 +9,7 @@ const CORS = {
 // (or a /triage session) reviews it and moves it to ready-for-agent/ready-for-human.
 const GITHUB_ISSUE_REPOS = {
   clarity: 'kwanghyunyoon/clarity-in-calm',
+  dreami: 'kwanghyunyoon/dreami',
 };
 
 async function createGithubIssue(repo, token, issueType, description) {
